@@ -1,163 +1,130 @@
 var inquirer = require("inquirer");
 var fs = require("fs");
 
-
-
-inquirer.prompt([{
+inquirer
+  .prompt([{
       type: "input",
       message: "What is your github username?",
-      name: "username"
-
+      name: "username",
     },
     {
       type: "input",
       message: "What is your project's title",
-      name: "title"
+      name: "title",
     },
     {
       type: "input",
       message: "What is your email address",
-      name: "emailAddress"
+      name: "emailAddress",
     },
     {
       type: "input",
       message: "Please write a short description of your project?",
-      name: "description"
+      name: "description",
     },
     {
       type: "input",
       message: "Please write installation instructions for your project?",
-      name: "installation"
+      name: "installation",
     },
     {
       type: "input",
       message: "How do you use this app?",
-      name: "usage"
+      name: "usage",
     },
 
     {
       type: "list",
       message: "What kind of license should your project have?",
       name: "license",
-      choices: ["MIT", "APACHE 2.0", "GPL 2.0", "BSD 3", "None"]
+      choices: ["MIT", "APACHE 2.0", "GPL 2.0", "BSD 3", "None"],
     },
     {
       type: "input",
       message: "What are the guidelines for contributing?",
-      name: "contributing"
+      name: "contributing",
     },
     {
       type: "input",
       message: "Provide some tests that you have ran on your project?",
-      name: "tests"
-
-
+      name: "tests",
     },
-
-
-
-
   ])
-  .then(answers => {
-
-
-
-    var badge = ""
+  .then((answers) => {
+    var badge = "";
 
     if (answers.license === "MIT") {
-      badge = "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)"
+      badge =
+        "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
     } else if (answers.license === "APACHE 2.0") {
-      badge = "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)"
+      badge =
+        "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
     } else if (answers.license === "GPL 2.0") {
-      badge = "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)"
+      badge =
+        "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)";
     } else if (answers.license === "BSD 3") {
-      badge = "[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)"
+      badge =
+        "[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)";
     }
 
+    const answersString = `## ${answers.title},
 
+ ${badge} 
 
-
-    const answersString =
-
-      `##${answers.title}
-
-      ${badge}
-
-      ## Description
+  ## Description
     
-      The description of my project is
-      ${answers.description}
+  The description of my project is
+  ${answers.description}
+
+     
   
   
   ## Table of Contents 
   
   * [Installation](#installation)
   * [Usage](#usage)
-  
-  
   * [License](#license)
-  
-  * [Email](#email)   
-       
-        
-  
-        
+  * [Email](#email)      
   * [Contributing](#contributing)
-        
   * [GithubUsername](#githubusername)
-        
-  
-  
   * [Tests](#tests)
-  
   * [Questions](#questions)
   
   
   
   
-   ## Installation  
+ ## Installation  
   
-   ${answers.installation}  
-  
-  
-   ## Usage
-  
-      To use this app
-      ${answers.usage} 
+  ${answers.installation} 
   
   
-    
-   ## License 
-   ${answers.license}
+  ## Usage
   
-   ## Email
-      The email address is 
-      ${answers.emailAddress}   
+  To use this app
+  ${answers.usage} 
   
+  ## License 
+  ${answers.license}
   
-   ## Contributing
-      
-      Here is how you contribute
-      ${answers.contributing}
+  ## Email
+  The email address is 
+  ${answers.emailAddress}   
   
+  ## Contributing      
+  Here is how you contribute
+  ${answers.contributing}
   
-   ## GithubUsername
-  
-      The github username is
-      ${answers.username}
-   
+  ## GithubUsername  
+  The github username is
+  ${answers.username}   
   
   ## Tests
-  
-     The following are tests that I have run.
-     ${answers.tests}
-  
-  
+  The following are tests that I have run.
+  ${answers.tests}
   
   
    ## Questions
-  
-      "  If you have any questions about this repository than please contact me at ${answers.email}."  You may view my Github account at the following url: https://github.com/${answers.username}
+   "If you have any questions about this repository than please contact me at ${answers.email}."  You may view my Github account at the following url: https://github.com/${answers.username}
      
   
   
@@ -184,8 +151,7 @@ inquirer.prompt([{
   
   
    
-    `
-
+    `;
 
     fs.writeFile("Readme.md", answersString, function (err) {
       if (err) {
